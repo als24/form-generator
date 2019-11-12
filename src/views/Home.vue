@@ -2,13 +2,19 @@
   <el-container class="container">
     <el-header class="header">
       <h3>Element-ui 表单生成器</h3>
+      <el-link type="primary" href="https://github.com/ch957869975/form-generator" target="_blank">To star this repo</el-link>
     </el-header>
     <el-container>
       <el-aside width="300px" class="el-aside__right">
         <el-card shadow="never" :body-style="{padding: 0, border: 'none', overflow: 'auto'}">
+
           <div slot="header">
             <span class="primary-color">内置组件</span>
           </div>
+
+          <draggable v-model="components" :clone="clone" :sort="false" :group="{ name: 'form', pull: 'clone', put: false }">
+            <component-build-in v-for="(item, index) in components" :key="index" :component-cfg="item" />
+          </draggable>
 
         </el-card>
       </el-aside>
@@ -19,6 +25,8 @@
             <el-button type="text" class="el-icon-view">预览</el-button>
             <el-button type="text" class="el-icon-document-copy">复制代码</el-button>
           </div>
+
+          <preview-container />
 
         </el-card>
       </el-main>
@@ -36,12 +44,29 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import Draggable from 'vuedraggable'
+import ComponentBuildIn from '@/components/component-build-in'
+import PreviewContainer from '@/components/preview'
+import { components } from '@/config'
+import { deepClone } from '@/utils'
 export default {
   name: 'home',
+  components: {
+    ComponentBuildIn,
+    Draggable,
+    PreviewContainer
+  },
   data () {
     return {
-      tabValue: 'formItem'
+      tabValue: 'formItem',
+      components,
+      globalId: 0 // 全局索引标志
+    }
+  },
+  methods: {
+    clone (comp) {
+      console.log(deepClone(comp))
+      return deepClone(comp)
     }
   }
 }
@@ -83,10 +108,15 @@ export default {
     line-height: 60px;
     color: #409eff;
     text-align: center;
-
+    position: relative;
     border-bottom: 1px #cecece solid;
     h3 {
       margin: 0;
+    }
+    .el-link {
+      position: absolute;
+      right: 45px;
+      top: 0;
     }
   }
 }

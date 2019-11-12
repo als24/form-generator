@@ -13,6 +13,10 @@ body {
   box-sizing: inherit;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .primary-color {
   color: #409eff;
 }
