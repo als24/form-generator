@@ -1,6 +1,6 @@
 <template>
   <div class="preview">
-    <el-form :model="form" ref="form" label-width="100px">
+    <el-form :model="form" ref="form" :inline="formConfig.inline" :label-position="formConfig['label-position']" :size="formConfig.size" label-width="100px">
       <draggable class="preview__form" :animation="200" :disabled="false" :list="list" group="form" @add="handleAdd" @end="handleMoveEnd" @start="handleMoveStart">
 
         <div v-if="list.length ===0" class="preview__nodata"> Drag a component from the left aside to here ! </div>
@@ -13,6 +13,10 @@
               </template>
             </component>
           </el-form-item>
+          <el-form-item>
+            <el-button type="primary">提交</el-button>
+            <el-button>取消</el-button>
+          </el-form-item>
         </template>
 
       </draggable>
@@ -24,6 +28,16 @@
 import Draggable from 'vuedraggable'
 export default {
   name: 'PreviewPage',
+  props: {
+    formConfig: {
+      type: Object,
+      default: () => { }
+    },
+    formItemConfig: {
+      type: Object,
+      default: () => { }
+    }
+  },
   components: {
     Draggable
   },
@@ -38,6 +52,9 @@ export default {
   data () {
     return {
       form: {},
+      formCfg: {
+        inline: false
+      },
       list: []
     }
   },

@@ -2,10 +2,10 @@
  * @Author: chenghao
  * @Date: 2019-11-12 10:10:34
  * @Last Modified by: chenghao
- * @Last Modified time: 2019-11-12 18:29:30
+ * @Last Modified time: 2019-11-13 10:34:34
  * @Desc: 内置组件配置
  */
-import { generateData } from './options'
+import { generateData, cascaderOption } from './options'
 export default [
   {
     name: '静态文本',
@@ -121,6 +121,16 @@ export default [
     vModel: [1, 4],
     attrs: {
       data: generateData()
+    },
+    attrsLabel: {}
+  },
+  {
+    name: '级联选择器',
+    label: 'Cascader',
+    componentName: 'el-cascader',
+    vModel: [],
+    attrs: {
+      options: cascaderOption
     },
     attrsLabel: {}
   }

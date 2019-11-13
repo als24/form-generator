@@ -26,7 +26,7 @@
             <el-button type="text" class="el-icon-document-copy">复制代码</el-button>
           </div>
 
-          <preview-container />
+          <preview-container :form-config="formConfig" />
 
         </el-card>
       </el-main>
@@ -35,7 +35,9 @@
           <el-tab-pane label="表单项配置" name="formItem">
 
           </el-tab-pane>
-          <el-tab-pane label="表单配置" name="form"></el-tab-pane>
+          <el-tab-pane label="表单配置" name="form">
+            <form-config :config="formConfig" @form-change="handleFormConfigChange" />
+          </el-tab-pane>
         </el-tabs>
       </el-aside>
     </el-container>
@@ -47,6 +49,7 @@
 import Draggable from 'vuedraggable'
 import ComponentBuildIn from '@/components/component-build-in'
 import PreviewContainer from '@/components/preview'
+import FormConfig from '@/components/form-config'
 import { components } from '@/config'
 import { deepClone } from '@/utils'
 export default {
@@ -54,19 +57,34 @@ export default {
   components: {
     ComponentBuildIn,
     Draggable,
-    PreviewContainer
+    PreviewContainer,
+    FormConfig
+
   },
   data () {
     return {
-      tabValue: 'formItem',
+      tabValue: 'form',
       components,
-      globalId: 0 // 全局索引标志
+      globalId: 0, // 全局索引标志
+      formConfig: {
+        inline: false,
+        'label-position': 'left',
+        size: 'medium',
+        'label-width': 'auto'
+      }
     }
   },
   methods: {
+    deepClone,
     clone (comp) {
       console.log(deepClone(comp))
       return deepClone(comp)
+    },
+    handleFormConfigChange (data) {
+      console.log(data)
+      if (typeof data === 'object') {
+        this.formConfig = { ...data }
+      }
     }
   }
 }
