@@ -2,7 +2,7 @@
  * @Author: chenghao
  * @Date: 2019-11-12 10:10:34
  * @Last Modified by: chenghao
- * @Last Modified time: 2019-11-13 10:34:34
+ * @Last Modified time: 2019-11-13 16:40:20
  * @Desc: 内置组件配置
  */
 import { generateData, cascaderOption } from './options'
@@ -86,18 +86,6 @@ export default [
     },
     attrsLabel: {}
   },
-  // {
-  //   name: '单选',
-  //   label: 'RadioGroup',
-  //   componentName: 'el-radio-group',
-  //   vModel: '线下场地免费',
-  //   attrs: {},
-  //   attrsLabel: {},
-  //   children: {
-  //     type: 'el-radio',
-  //     data: ['线下场地免费', '线上品牌商赞助']
-  //   }
-  // }
   {
     name: '评分',
     label: 'Rate',

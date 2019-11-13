@@ -1,17 +1,18 @@
 <template>
   <div class="preview">
-    <el-form :model="form" ref="form" :inline="formConfig.inline" :label-position="formConfig['label-position']" :size="formConfig.size" label-width="100px">
+    <el-form :model="formConfig" ref="form" :inline="formConfig.inline" :label-position="formConfig['label-position']" :size="formConfig.size" label-width="100px">
       <draggable class="preview__form" :animation="200" :disabled="false" :list="list" group="form" @add="handleAdd" @end="handleMoveEnd" @start="handleMoveStart">
 
         <div v-if="list.length ===0" class="preview__nodata"> Drag a component from the left aside to here ! </div>
 
         <template v-else>
-          <el-form-item v-for="(item, index) in list" :key="index" :label="item.name">
+          <el-form-item v-for="(item, index) in list" :key="index" :class="{'active': index === select_item_index}" :label="item.name" @click.native="handleFormItemClick(index)" class="preview__form_item">
             <component :is="item.componentName" v-model="item.vModel" v-bind="item.attrs">
               <template v-if="!!item.defaultValue">
                 {{  item.defaultValue  }}
               </template>
             </component>
+            <el-button v-if="index === select_item_index" type="primary" icon="el-icon-delete" size="mini" class="preview__delete_btn" @click.stop="handleDelete(index)" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary">提交</el-button>
@@ -47,26 +48,44 @@ export default {
         console.log(0, val)
       },
       deep: true
+    },
+    select_item_index (val) {
+      if (val === this.list.length) {
+        this.select_item_index--
+      } else {
+        this.$emit('select', val)
+      }
     }
   },
   data () {
     return {
-      form: {},
-      formCfg: {
-        inline: false
-      },
-      list: []
+      list: [],
+      select_item_index: 0
     }
   },
   methods: {
+    handleFormItemClick (index) {
+      this.select_item_index = index
+    },
     handleAdd (e) {
-      console.log(1, e)
+      console.log('component added to preview page', e)
+      this.select_item_index = e.newIndex
+      console.log('this.select_item_inde', this.select_item_index)
+    },
+    handleDelete (index) {
+      console.log('component delete', index)
+      this.list.splice(index, 1)
+      if (index >= this.list.length) {
+        this.select_item_index = this.list.length - 1
+      }
     },
     handleMoveEnd (e) {
-      console.log(2, e)
+      console.log('move end', e)
+      this.select_item_index = e.newIndex
     },
     handleMoveStart (e) {
-      console.log(3, e)
+      console.log('move start', e)
+      this.select_item_index = e.oldIndex
     }
   }
 }
@@ -84,6 +103,32 @@ export default {
     line-height: 300px;
     text-align: center;
     border: 1px #ccc dashed;
+  }
+  &__form_item {
+    cursor: move;
+    position: relative;
+    &.active {
+      border: 1px dashed #409eff;
+    }
+    &::after {
+      content: " ";
+      display: block;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      z-index: 1002;
+    }
+  }
+
+  &__delete_btn {
+    position: absolute;
+    border-radius: 0;
+    padding: 5px 5px;
+    right: 0;
+    bottom: 0;
+    z-index: 1003;
   }
 }
 </style>
