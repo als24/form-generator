@@ -8,8 +8,8 @@
         <template v-else>
           <el-form-item v-for="(item, index) in list" :key="index" :class="{'active': index === select_item_index}" :label="item.name" @click.native="handleFormItemClick(index)" class="preview__form_item">
             <component :is="item.componentName" v-model="item.vModel" v-bind="item.attrs">
-              <template v-if="!!item.defaultValue">
-                {{  item.defaultValue  }}
+              <template v-if="item.componentName === 'div'">
+                {{  item.vModel  }}
               </template>
             </component>
             <el-button v-if="index === select_item_index" type="primary" icon="el-icon-delete" size="mini" class="preview__delete_btn" @click.stop="handleDelete(index)" />
@@ -27,6 +27,7 @@
 </template>
 <script>
 import Draggable from 'vuedraggable'
+import { mapMutations } from 'vuex'
 export default {
   name: 'PreviewPage',
   props: {
@@ -53,23 +54,29 @@ export default {
       if (val === this.list.length) {
         this.select_item_index--
       } else {
-        this.$emit('select', val)
+        // this.$emit('select', val)
+
       }
     }
   },
   data () {
     return {
       list: [],
-      select_item_index: 0
+      select_item_index: -1
     }
   },
   methods: {
+    ...mapMutations([
+      'SET_SELECTED_COMPONENT'
+    ]),
     handleFormItemClick (index) {
       this.select_item_index = index
+      this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
     },
     handleAdd (e) {
       console.log('component added to preview page', e)
       this.select_item_index = e.newIndex
+      this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
       console.log('this.select_item_inde', this.select_item_index)
     },
     handleDelete (index) {
@@ -77,15 +84,18 @@ export default {
       this.list.splice(index, 1)
       if (index >= this.list.length) {
         this.select_item_index = this.list.length - 1
+        this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
       }
     },
     handleMoveEnd (e) {
       console.log('move end', e)
       this.select_item_index = e.newIndex
+      this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
     },
     handleMoveStart (e) {
       console.log('move start', e)
       this.select_item_index = e.oldIndex
+      this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
     }
   }
 }

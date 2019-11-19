@@ -26,18 +26,21 @@
             <el-button type="text" class="el-icon-document-copy">复制代码</el-button>
           </div>
 
-          <preview-container :form-config="formConfig" />
+          <preview-container ref="preview" :form-config="formConfig" />
 
         </el-card>
       </el-main>
       <el-aside width="300px" class="el-aside__left">
         <el-tabs v-model="tabValue" stretch>
-          <el-tab-pane label="表单项配置" name="formItem">
 
-          </el-tab-pane>
           <el-tab-pane label="表单配置" name="form">
             <form-config :config="formConfig" @form-change="handleFormConfigChange" />
           </el-tab-pane>
+
+          <el-tab-pane label="表单项配置" name="formItem">
+            <form-item-config />
+          </el-tab-pane>
+
         </el-tabs>
       </el-aside>
     </el-container>
@@ -50,20 +53,21 @@ import Draggable from 'vuedraggable'
 import ComponentBuildIn from '@/components/component-build-in'
 import PreviewContainer from '@/components/preview'
 import FormConfig from '@/components/form-config'
+import FormItemConfig from '@/components/form-item-config'
 import { components } from '@/config'
 import { deepClone } from '@/utils'
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
     ComponentBuildIn,
     Draggable,
     PreviewContainer,
-    FormConfig
-
+    FormConfig,
+    FormItemConfig
   },
   data () {
     return {
-      tabValue: 'form',
+      tabValue: 'formItem',
       components,
       globalId: 0, // 全局索引标志
       formConfig: {
@@ -72,6 +76,7 @@ export default {
         size: 'medium',
         'label-width': 'auto'
       }
+
     }
   },
   methods: {

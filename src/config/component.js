@@ -2,7 +2,7 @@
  * @Author: chenghao
  * @Date: 2019-11-12 10:10:34
  * @Last Modified by: chenghao
- * @Last Modified time: 2019-11-13 16:40:20
+ * @Last Modified time: 2019-11-19 18:09:38
  * @Desc: 内置组件配置
  */
 import { generateData, cascaderOption } from './options'
@@ -11,7 +11,7 @@ export default [
     name: '静态文本',
     label: 'Text',
     componentName: 'div',
-    defaultValue: '一句话的静态文本'
+    vModel: '一句话的静态文本'
   },
   {
     name: '单行输入框',
@@ -19,7 +19,14 @@ export default [
     componentName: 'el-input',
     vModel: '',
     attrs: {
-      placeholder: '请输入单行输入框的值'
+      placeholder: '请输入单行输入框的值',
+      clearable: false,
+      disabled: false
+    },
+    attrsLabel: {
+      placeholder: '占位符',
+      clearable: '是否可清空',
+      disabled: '禁用'
     }
   },
   {
@@ -30,6 +37,9 @@ export default [
     attrs: {
       placeholder: '请输入多行输入框的值',
       type: 'textarea'
+    },
+    attrsLabel: {
+      placeholder: '占位符'
     }
   },
   {
