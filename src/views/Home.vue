@@ -22,7 +22,7 @@
         <el-card shadow="never" :body-style="{padding: 0,border: 'none', overflow: 'auto'}">
 
           <div slot="header">
-            <el-button type="text" class="el-icon-view">预览</el-button>
+            <el-button type="text" class="el-icon-view" @click="showPreviewDialog">预览</el-button>
             <el-button type="text" class="el-icon-document-copy">复制代码</el-button>
           </div>
 
@@ -44,6 +44,7 @@
         </el-tabs>
       </el-aside>
     </el-container>
+    <preview-dialog :visible="previewVisible" :list="list" :config="formConfig" @close="previewVisible=false" />
   </el-container>
 
 </template>
@@ -54,6 +55,7 @@ import ComponentBuildIn from '@/components/component-build-in'
 import PreviewContainer from '@/components/preview'
 import FormConfig from '@/components/form-config'
 import FormItemConfig from '@/components/form-item-config'
+import PreviewDialog from '@/components/preview-dialog'
 import { components } from '@/config'
 import { deepClone } from '@/utils'
 export default {
@@ -63,12 +65,15 @@ export default {
     Draggable,
     PreviewContainer,
     FormConfig,
-    FormItemConfig
+    FormItemConfig,
+    PreviewDialog
   },
   data () {
     return {
       tabValue: 'formItem',
       components,
+      previewVisible: false,
+      list: [],
       globalId: 0, // 全局索引标志
       formConfig: {
         inline: false,
@@ -90,6 +95,20 @@ export default {
       if (typeof data === 'object') {
         this.formConfig = { ...data }
       }
+    },
+    showPreviewDialog () {
+      if (this.$refs.preview.list.length === 0) {
+        // 当中间区域没有组件存在时，禁止预览
+        this.$message({
+          center: true,
+          type: 'warning',
+          message: '先从左侧拖拽组件到中央展示区域试试吧！',
+          offset: 65
+        })
+        return false
+      }
+      this.list = deepClone(this.$refs.preview.list)
+      this.previewVisible = true
     }
   }
 }

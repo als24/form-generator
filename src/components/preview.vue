@@ -51,8 +51,7 @@ export default {
     select_item_index (val) {
       if (val === this.list.length) {
         this.select_item_index--
-      } else {
-        // this.$emit('select', val)
+        this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
       }
     }
   },
