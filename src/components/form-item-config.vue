@@ -26,7 +26,7 @@ export default {
   },
   watch: {
     currentComp (val) {
-      if (JSON.stringify(val) === JSON.stringify(this.form)) return
+      // if (JSON.stringify(val) === JSON.stringify(this.form)) return
       this.form = val
     }
   },
@@ -40,7 +40,8 @@ export default {
     getComponent () {
       return (key) => {
         console.log(key)
-        const ret = typeof (this.form[key] ? this.form[key] : this.form.attrs[key])
+        const ret = typeof (this.form[key] !== undefined ? this.form[key] : this.form.attrs[key])
+        console.log(ret)
         let name = 'el-input'
         switch (ret) {
           case 'string':

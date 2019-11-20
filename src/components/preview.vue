@@ -45,9 +45,7 @@ export default {
   },
   watch: {
     list: {
-      handler (val) {
-        console.log(0, val)
-      },
+      handler (val) { },
       deep: true
     },
     select_item_index (val) {
@@ -55,7 +53,6 @@ export default {
         this.select_item_index--
       } else {
         // this.$emit('select', val)
-
       }
     }
   },
@@ -71,16 +68,17 @@ export default {
     ]),
     handleFormItemClick (index) {
       this.select_item_index = index
+
       this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
     },
     handleAdd (e) {
-      console.log('component added to preview page', e)
+      console.log('component was added', e)
       this.select_item_index = e.newIndex
       this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
-      console.log('this.select_item_inde', this.select_item_index)
+      console.log('this.select_item_index', this.select_item_index)
     },
     handleDelete (index) {
-      console.log('component delete', index)
+      console.log('component was delete', index)
       this.list.splice(index, 1)
       if (index >= this.list.length) {
         this.select_item_index = this.list.length - 1

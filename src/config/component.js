@@ -2,7 +2,7 @@
  * @Author: chenghao
  * @Date: 2019-11-12 10:10:34
  * @Last Modified by: chenghao
- * @Last Modified time: 2019-11-19 18:09:38
+ * @Last Modified time: 2019-11-20 09:42:07
  * @Desc: 内置组件配置
  */
 import { generateData, cascaderOption } from './options'
