@@ -23,7 +23,7 @@
 
           <div slot="header">
             <el-button type="text" class="el-icon-view" @click="showPreviewDialog">预览</el-button>
-            <el-button type="text" class="el-icon-document-copy">复制代码</el-button>
+            <el-button type="text" class="el-icon-document-copy" @click="copy">复制代码</el-button>
           </div>
 
           <preview-container ref="preview" :form-config="formConfig" />
@@ -109,6 +109,24 @@ export default {
       }
       this.list = deepClone(this.$refs.preview.list)
       this.previewVisible = true
+    },
+    copy () {
+      if (this.$refs.preview.list.length === 0) {
+        // 当中间区域没有组件存在时，禁止预览
+        this.$message({
+          center: true,
+          type: 'warning',
+          message: '先从左侧拖拽组件到中央展示区域试试吧！',
+          offset: 65
+        })
+        return false
+      }
+      this.$message({
+        center: true,
+        type: 'warning',
+        message: '这个功能还没做',
+        offset: 65
+      })
     }
   }
 }

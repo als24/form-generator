@@ -45,10 +45,15 @@ export default {
     },
     getComponent () {
       return (key) => {
-        console.log(key)
         let val = this.form[key] !== undefined ? this.form[key] : this.form.attrs[key]
         const ret = typeof val
+        console.log(key, val, ret)
         let name = 'el-input'
+        if (ret === 'string' && val.length === 7 && val[0] === '#') {
+          // 临时这样判断16进制颜色值
+          name = 'el-color-picker'
+          return name
+        }
         switch (ret) {
           case 'string':
             name = 'el-input'
