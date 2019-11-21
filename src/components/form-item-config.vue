@@ -11,12 +11,17 @@
         <component :is="getComponent(item)" v-model="form.attrs[item]"></component>
       </el-form-item>
     </template>
+    <!-- <el-form-item label="默认值">
+      <codemirror v-model="code" :options="cmOptions" style="height:100px;overflow:hidden"></codemirror>
+    </el-form-item> -->
   </el-form>
 </template>
 <script>
 import { mapState } from 'vuex'
+
 export default {
   name: 'FormItemConfig',
+
   data () {
     return {
       form: {
@@ -27,6 +32,7 @@ export default {
   watch: {
     currentComp (val) {
       // if (JSON.stringify(val) === JSON.stringify(this.form)) return
+
       this.form = val
     }
   },
@@ -40,8 +46,8 @@ export default {
     getComponent () {
       return (key) => {
         console.log(key)
-        const ret = typeof (this.form[key] !== undefined ? this.form[key] : this.form.attrs[key])
-        console.log(ret)
+        let val = this.form[key] !== undefined ? this.form[key] : this.form.attrs[key]
+        const ret = typeof val
         let name = 'el-input'
         switch (ret) {
           case 'string':
@@ -65,9 +71,6 @@ export default {
     attrsLabel () {
       return Object.values(this.form.attrsLabel || {})
     }
-  },
-  methods: {
-
   }
 }
 </script>
