@@ -3,7 +3,7 @@
     <el-form-item required label="标签：">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="默认值：">
+    <el-form-item v-if="form.vModel !== undefined" label="默认值：">
       <component :is="getComponent('vModel')" v-model="form.vModel"></component>
     </el-form-item>
     <template v-for="(item, index) in attrs">

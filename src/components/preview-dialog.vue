@@ -2,11 +2,20 @@
   <el-dialog title="预览" :visible.sync="visible" :before-close="handleClose">
     <el-form :model="form" ref="form" :inline="form.inline" :label-position="form['label-position']" :size="form.size" label-width="100px" style="width:90%;margin:0 auto">
 
-      <el-form-item v-for="(item, index) in list" :key="index" :label="item.name" class="preview__form_item">
+      <el-form-item v-for="(item, index) in list" :key="index" :label="item.name + '：'" class="preview__form_item">
         <component :is="item.componentName" v-model="item.vModel" v-bind="item.attrs">
           <template v-if="item.componentName === 'div'">
             {{  item.vModel  }}
           </template>
+
+          <template v-if="item.isComplex">
+            <component v-for="(child, idx) in item.children" :key="idx" :is="child.componentName" v-bind="child.attrs">
+              <template v-if="child.slot">
+                {{ child.slot  }}
+              </template>
+            </component>
+          </template>
+
         </component>
       </el-form-item>
       <el-form-item>

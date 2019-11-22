@@ -2,16 +2,97 @@
  * @Author: chenghao
  * @Date: 2019-11-12 10:10:34
  * @Last Modified by: chenghao
- * @Last Modified time: 2019-11-21 15:51:12
+ * @Last Modified time: 2019-11-22 16:13:12
  * @Desc: 内置组件配置
  */
-import { generateData, cascaderOption } from './options';
+import {
+  cascaderOption
+  /* generateData, */
+} from './options';
 export default [
   {
     name: '静态文本',
     label: 'Text',
     componentName: 'div',
     vModel: '一句话的静态文本'
+  },
+  {
+    name: '单选框',
+    label: 'Radio',
+    componentName: 'el-radio-group',
+    isComplex: true,
+    vModel: '备选项1',
+    children: [
+      {
+        componentName: 'el-radio',
+        attrs: {
+          label: '备选项1'
+        }
+      },
+      {
+        componentName: 'el-radio',
+        attrs: {
+          label: '备选项2'
+        }
+      }
+    ],
+    attrs: {
+      disabled: false
+    },
+    attrsLabel: {
+      disabled: '是否禁用'
+    }
+  },
+  {
+    name: '复选框',
+    label: 'Checkbox',
+    componentName: 'el-checkbox',
+    vModel: true,
+    attrs: {
+      disabled: false,
+      border: false,
+      label: '备选项'
+    },
+    attrsLabel: {
+      disabled: '是否禁用',
+      border: '是否显示边框',
+      label: '显示文字'
+    }
+  },
+  {
+    name: '下拉选择框',
+    label: 'Select',
+    componentName: 'el-select',
+    isComplex: true,
+    vModel: 'macbook pro',
+    children: [
+      {
+        componentName: 'el-option',
+        attrs: {
+          value: 'macbook pro',
+          label: 'macbook pro'
+        }
+      },
+      {
+        componentName: 'el-option',
+        attrs: {
+          value: 'macbook air',
+          label: 'macbook air'
+        }
+      }
+    ],
+    attrs: {
+      placeholder: '请选择',
+      multiple: false,
+      clearable: false,
+      disabled: false
+    },
+    attrsLabel: {
+      placeholder: '占位符',
+      multiple: '是否多选',
+      clearable: '是否可清空',
+      disabled: '是否禁用'
+    }
   },
   {
     name: '单行输入框',
@@ -196,27 +277,78 @@ export default [
     label: 'ColorPicker',
     componentName: 'el-color-picker',
     vModel: '#409EFF',
-    attrs: {},
-    attrsLabel: {}
+    attrs: {
+      disabled: false,
+      'show-alpha': false
+    },
+    attrsLabel: {
+      disabled: '是否禁用',
+      'show-alpha': '是否支持透明度选择'
+    }
   },
   {
-    name: '穿梭框',
-    label: 'Transfer',
-    componentName: 'el-transfer',
-    vModel: [1, 4],
+    name: '上传',
+    label: 'Upload',
+    componentName: 'el-upload',
+    vModel: undefined,
+    isComplex: true,
+    children: [
+      {
+        componentName: 'el-button',
+        slot: '上传文件',
+        attrs: {
+          type: 'primary',
+          size: 'small'
+        }
+      }
+    ],
     attrs: {
-      data: generateData()
+      action: 'https://jsonplaceholder.typicode.com/posts/',
+      multiple: false,
+      name: 'file',
+      'with-credentials': false,
+      'show-file-list': true,
+      disabled: false,
+      drag: false
     },
-    attrsLabel: {}
+    attrsLabel: {
+      action: '上传的地址',
+      multiple: '是否多选',
+      name: '上传的文件字段名',
+      'with-credentials': '支持发送 cookie 凭证信息',
+      'show-file-list': '是否显示已上传文件列表',
+      disabled: '是否禁用',
+      drag: '是否启用拖拽上传'
+    }
   },
+  // {
+  //   name: '穿梭框',
+  //   label: 'Transfer',
+  //   componentName: 'el-transfer',
+  //   vModel: [1, 4],
+  //   attrs: {
+  //     data: generateData(),
+  //     filterable: false
+  //   },
+  //   attrsLabel: {
+  //     filterable: '是否可搜索'
+  //   }
+  // },
   {
     name: '级联选择器',
     label: 'Cascader',
     componentName: 'el-cascader',
-    vModel: [],
+    vModel: '',
     attrs: {
-      options: cascaderOption
+      options: cascaderOption,
+      disabled: false,
+      clearable: false,
+      'show-all-levels': true
     },
-    attrsLabel: {}
+    attrsLabel: {
+      disabled: '是否禁用',
+      clearable: '是否支持清空选项',
+      'show-all-levels': '输入框中是否显示选中值的完整路径'
+    }
   }
 ];

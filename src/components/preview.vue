@@ -6,12 +6,28 @@
         <div v-if="list.length ===0" class="preview__nodata"> Drag a component from the left aside to here ! </div>
 
         <template v-else>
-          <el-form-item v-for="(item, index) in list" :key="index" :class="{'active': index === select_item_index}" :label="item.name" @click.native="handleFormItemClick(index)" class="preview__form_item">
-            <component :is="item.componentName" v-model="item.vModel" v-bind="item.attrs">
+          <el-form-item v-for="(item, index) in list" :key="index" :class="{'active': index === select_item_index}" :label="item.name + '：'" @click.native="handleFormItemClick(index)" class="preview__form_item">
+            <component v-if="item.componentName !== 'el-radio-group'" :is="item.componentName" v-model="item.vModel" v-bind="item.attrs">
+
+              <!-- 静态文本时 -->
               <template v-if="item.componentName === 'div'">
                 {{  item.vModel  }}
               </template>
+
+              <!-- 复合组件时 -->
+              <template v-if="item.isComplex">
+                <component v-for="(child, idx) in item.children" :key="idx" :is="child.componentName" v-bind="child.attrs">
+                  <template v-if="child.slot">
+                    {{ child.slot  }}
+                  </template>
+                </component>
+              </template>
+
             </component>
+            <el-radio-group v-else v-model="item.vModel" v-bind="item.attrs">
+              <el-radio v-for="(child, idx) in item.children" :key="idx" v-bind="child.attrs">
+              </el-radio>
+            </el-radio-group>
             <el-button v-if="index === select_item_index" type="primary" icon="el-icon-delete" size="mini" class="preview__delete_btn" @click.stop="handleDelete(index)" />
           </el-form-item>
           <el-form-item>
@@ -92,6 +108,10 @@ export default {
     handleMoveStart (e) {
       console.log('move start', e)
       this.select_item_index = e.oldIndex
+      this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
+    },
+    setData (index) {
+      this.select_item_index = index
       this.SET_SELECTED_COMPONENT(this.list[this.select_item_index])
     }
   }
