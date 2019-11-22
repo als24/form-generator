@@ -20,18 +20,21 @@
 
 ### ✨ [Demo](https://fenda-tz.gitee.io/)
 
-## Install
+## Usage
 
 ```sh
-npm install
+git clone git@github.com:ch957869975/form-generator.git
+cd form-generator
+yarn
+yarn serve
 ```
 
 ## Author
 
-👤 **芬达Tz**
+👤 **芬达 Tz**
 
-* Website: http://plutos.net.cn
-* Github: [@ch957869975](https://github.com/ch957869975)
+- Website: http://plutos.net.cn
+- Github: [@ch957869975](https://github.com/ch957869975)
 
 ## 🤝 Contributing
 
@@ -43,8 +46,9 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2019 [芬达Tz](https://github.com/ch957869975).<br />
+Copyright © 2019 [芬达 Tz](https://github.com/ch957869975).<br />
 This project is [MIT](https://github.com/ch957869975/form-generator/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
