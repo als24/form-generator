@@ -1,7 +1,22 @@
 {
   "name": "form-generator",
   "version": "0.1.0",
-  "private": true,
+  "description": "一个基于 Element-ui 的表单生成器，快速完成编码需求，快乐摸鱼！",
+  "author": "芬达Tz",
+  "keywords": [
+    "drag",
+    "vue",
+    "element"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ch957869975/form-generator#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ch957869975/form-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ch957869975/form-generator/issues"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
